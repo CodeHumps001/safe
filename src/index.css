@@ -5,56 +5,97 @@
   --font-display: "Plus Jakarta Sans", system-ui, sans-serif;
   --font-mono: "JetBrains Mono", monospace;
   --color-brand-green: #00A651;
-  --color-brand-gold: #f59e0b; /* Amber 500 equivalent for the Bento Grid accent */
-  --color-brand-red: #CE1126;
-  --color-bg-deep: #0a0a0b;
+  --color-brand-gold: #f59e0b; /* Vibrant amber gold */
+  --color-brand-red: #CE1126;  /* Deep national red */
+  --color-bg-deep: #050506;   /* Extremely premium obsidian pitch black */
+}
+
+/* Base body reset for high contrast, high-end visual weight */
+body {
+  background-color: #050506 !important;
+  color: #f8fafc;
 }
 
 /* Custom scrollbar styling for slick bento layout */
 ::-webkit-scrollbar {
-  width: 5px;
-  height: 5px;
+  width: 6px;
+  height: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: rgba(10, 10, 11, 0.5);
+  background: #050506;
 }
 ::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.1);
   border-radius: 99px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(245, 158, 11, 0.2);
+  background: #f59e0b;
 }
 
 /* Elegant Leaflet Popups mapping to Bento card aesthetics */
 .leaflet-popup-content-wrapper {
-  background-color: #0d0d0e !important;
-  color: #f1f5f9 !important;
-  border: 1px solid rgba(255, 255, 255, 0.05) !important;
-  border-radius: 20px !important;
-  padding: 8px !important;
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.8) !important;
+  background-color: #0c0c0e !important;
+  color: #f8fafc !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  border-radius: 24px !important;
+  padding: 10px !important;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.9) !important;
+  backdrop-filter: blur(12px);
 }
 
 .leaflet-popup-tip {
-  background-color: #0d0d0e !important;
-  border: 1px solid rgba(255, 255, 255, 0.05) !important;
+  background-color: #0c0c0e !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
 }
 
 .leaflet-container {
-  background: #09090a !important;
+  background: #050506 !important;
 }
 
-/* Custom bento-style glassmorphism panel overlay */
+/* Custom premium-style glassmorphism panel overlay */
 .glass-panel {
-  background: rgba(20, 20, 22, 0.7);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  background: rgba(12, 12, 14, 0.85);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-/* Bento Card Style definitions */
+/* Premium Card Style definitions - replaces washed-out grays with metallic-finish cards */
 .bento-card-gradient {
-  background: linear-gradient(135deg, #18181b 0%, #0d0d0e 100%);
+  background: linear-gradient(135deg, #0e0e11 0%, #060607 100%);
+  border: 1px solid rgba(255, 255, 255, 0.07);
 }
+
+.bento-card-gradient:hover {
+  border-color: rgba(245, 158, 11, 0.2);
+  box-shadow: 0 10px 30px -15px rgba(245, 158, 11, 0.15);
+}
+
+/* Dynamic glowing border effect */
+.glow-gold {
+  box-shadow: 0 0 25px -5px rgba(245, 158, 11, 0.2);
+}
+
+.glow-green {
+  box-shadow: 0 0 25px -5px rgba(0, 166, 81, 0.2);
+}
+
+.glow-red {
+  box-shadow: 0 0 25px -5px rgba(206, 17, 38, 0.2);
+}
+
+/* Fade-in & scaling animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-spin-slow {
+  animation: spin 8s linear infinite;
+}
+
 

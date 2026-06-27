@@ -21,12 +21,12 @@ export default function Navbar({
   const unreadCount = notifications.filter((n) => !n.read).length;
 
   return (
-    <nav className="bg-[#0a0a0b]/90 border-b border-white/5 sticky top-0 z-[100] backdrop-blur-md px-6 py-4 flex items-center justify-between" id="navbar-deck">
+    <nav className="bg-[#050506]/95 border-b border-white/10 sticky top-0 z-[100] backdrop-blur-md px-6 py-4 flex items-center justify-between" id="navbar-deck">
       
       {/* Brand logo */}
       <div className="flex items-center gap-3 cursor-pointer" onClick={() => setActiveTab('map')}>
-        <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-brand-green via-brand-gold to-brand-red flex items-center justify-center p-0.5 shadow-md shadow-amber-500/10">
-          <div className="w-full h-full bg-[#0a0a0b] rounded-[10px] flex items-center justify-center">
+        <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-brand-green via-brand-gold to-brand-red flex items-center justify-center p-0.5 shadow-md shadow-amber-500/15">
+          <div className="w-full h-full bg-[#050506] rounded-[10px] flex items-center justify-center">
             <Shield className="w-5 h-5 text-brand-gold" />
           </div>
         </div>
@@ -41,11 +41,11 @@ export default function Navbar({
       </div>
 
       {/* Tabs navigation - Desktop */}
-      <div className="hidden md:flex items-center gap-1.5 bg-zinc-900 border border-white/5 p-1 rounded-2xl">
+      <div className="hidden md:flex items-center gap-1.5 bg-zinc-950 border border-white/10 p-1 rounded-2xl">
         <button
           onClick={() => setActiveTab('map')}
           className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer ${
-            activeTab === 'map' ? 'bg-zinc-800 text-brand-gold shadow-inner border border-white/5' : 'text-slate-400 hover:text-slate-200 hover:bg-white/5'
+            activeTab === 'map' ? 'bg-zinc-900 text-brand-gold shadow-inner border border-white/10' : 'text-slate-400 hover:text-slate-200 hover:bg-white/5'
           }`}
         >
           <span>🗺️</span> Interactive Map
@@ -53,7 +53,7 @@ export default function Navbar({
         <button
           onClick={() => setActiveTab('dashboard')}
           className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer ${
-            activeTab === 'dashboard' ? 'bg-zinc-800 text-brand-gold shadow-inner border border-white/5' : 'text-slate-400 hover:text-slate-200 hover:bg-white/5'
+            activeTab === 'dashboard' ? 'bg-zinc-900 text-brand-gold shadow-inner border border-white/10' : 'text-slate-400 hover:text-slate-200 hover:bg-white/5'
           }`}
         >
           <span>📊</span> Dashboard
@@ -61,7 +61,7 @@ export default function Navbar({
         <button
           onClick={() => setActiveTab('leaderboard')}
           className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer ${
-            activeTab === 'leaderboard' ? 'bg-zinc-800 text-brand-gold shadow-inner border border-white/5' : 'text-slate-400 hover:text-slate-200 hover:bg-white/5'
+            activeTab === 'leaderboard' ? 'bg-zinc-900 text-brand-gold shadow-inner border border-white/10' : 'text-slate-400 hover:text-slate-200 hover:bg-white/5'
           }`}
         >
           <span>🏆</span> Leaderboard
@@ -69,7 +69,7 @@ export default function Navbar({
         <button
           onClick={() => setActiveTab('digest')}
           className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer ${
-            activeTab === 'digest' ? 'bg-zinc-800 text-brand-gold shadow-inner border border-white/5' : 'text-slate-400 hover:text-slate-200 hover:bg-white/5'
+            activeTab === 'digest' ? 'bg-zinc-900 text-brand-gold shadow-inner border border-white/10' : 'text-slate-400 hover:text-slate-200 hover:bg-white/5'
           }`}
         >
           <span>📰</span> AI Safety Digests
@@ -83,7 +83,7 @@ export default function Navbar({
         <div className="relative">
           <button
             onClick={() => setShowNotifications(!showNotifications)}
-            className="p-2.5 rounded-xl bg-zinc-900 hover:bg-zinc-800 border border-white/5 text-slate-300 hover:text-white transition-all relative active:scale-95"
+            className="p-2.5 rounded-xl bg-zinc-950 hover:bg-zinc-900 border border-white/10 text-slate-300 hover:text-white transition-all relative active:scale-95"
             title="Notification Alerts"
           >
             <Bell className="w-4 h-4" />
@@ -96,8 +96,8 @@ export default function Navbar({
 
           {/* Notifications dropdown panel */}
           {showNotifications && (
-            <div className="absolute right-0 mt-3 w-80 bg-zinc-900 border border-white/5 rounded-2xl shadow-2xl p-4 z-[999] backdrop-blur-lg animate-fade-in">
-              <div className="flex justify-between items-center border-b border-white/5 pb-2 mb-2 flex-wrap gap-2">
+            <div className="absolute right-0 mt-3 w-80 bg-slate-950 border border-white/10 rounded-2xl shadow-2xl p-4 z-[999] backdrop-blur-lg animate-fade-in">
+              <div className="flex justify-between items-center border-b border-white/10 pb-2 mb-2 flex-wrap gap-2">
                 <span className="text-xs font-bold text-slate-200 uppercase tracking-wider">Alert Center</span>
                 {unreadCount > 0 && (
                   <button
@@ -121,8 +121,8 @@ export default function Navbar({
                       key={n.id}
                       className={`p-3 rounded-xl border flex flex-col gap-1 text-[11px] leading-snug transition-all ${
                         n.read
-                          ? 'bg-[#0a0a0b]/40 border-white/5 text-slate-400'
-                          : 'bg-white/5 border-brand-gold/20 text-slate-200 shadow-sm'
+                          ? 'bg-[#050506]/40 border-white/10 text-slate-400'
+                          : 'bg-white/5 border-brand-gold/25 text-slate-200 shadow-sm'
                       }`}
                     >
                       <div className="flex justify-between gap-2 items-start font-bold">
@@ -141,8 +141,8 @@ export default function Navbar({
         </div>
 
         {/* Profile Avatar Indicator */}
-        <div className="flex items-center gap-2.5 border-l border-white/5 pl-4 hidden sm:flex">
-          <div className="w-8 h-8 rounded-xl bg-zinc-900 border border-white/5 flex items-center justify-center text-xs font-bold text-brand-gold font-mono shadow-sm">
+        <div className="flex items-center gap-2.5 border-l border-white/10 pl-4 hidden sm:flex">
+          <div className="w-8 h-8 rounded-xl bg-zinc-950 border border-white/10 flex items-center justify-center text-xs font-bold text-brand-gold font-mono shadow-sm">
             KM
           </div>
           <div className="text-left">

@@ -38,7 +38,7 @@ export default function SafetyDigest({ reports }: SafetyDigestProps) {
     <div className="space-y-6" id="safety-digest-panel">
       
       {/* Newspaper header */}
-      <div className="bento-card-gradient border border-white/5 rounded-3xl p-6 shadow-xl relative overflow-hidden flex flex-col md:flex-row items-center justify-between gap-4">
+      <div className="bento-card-gradient border border-white/10 rounded-3xl p-6 shadow-xl relative overflow-hidden flex flex-col md:flex-row items-center justify-between gap-4">
         <div className="max-w-md">
           <p className="text-[9px] uppercase tracking-[0.2em] text-brand-gold font-bold mb-1">ACCRA CIVIC FORECASTS</p>
           <h1 className="font-display font-black tracking-tight text-2xl text-white flex items-center gap-2">
@@ -55,7 +55,7 @@ export default function SafetyDigest({ reports }: SafetyDigestProps) {
           <select
             value={selectedDistrict}
             onChange={(e) => handleGenerateDigest(e.target.value)}
-            className="w-full bg-zinc-950 border border-white/5 rounded-xl px-4 py-3 text-slate-100 text-xs focus:outline-none focus:ring-1 focus:ring-brand-gold cursor-pointer"
+            className="w-full bg-zinc-950 border border-white/10 rounded-xl px-4 py-3 text-slate-100 text-xs focus:outline-none focus:ring-1 focus:ring-brand-gold cursor-pointer"
           >
             {GHANA_DISTRICTS.map((dist) => (
               <option key={dist} value={dist}>{dist}</option>
@@ -66,7 +66,7 @@ export default function SafetyDigest({ reports }: SafetyDigestProps) {
 
       {/* Loading Skeleton */}
       {isGenerating && (
-        <div className="bg-zinc-950 border border-white/5 rounded-3xl p-12 text-center flex flex-col items-center justify-center space-y-4 animate-pulse">
+        <div className="bg-zinc-950 border border-white/10 rounded-3xl p-12 text-center flex flex-col items-center justify-center space-y-4 animate-pulse">
           <RefreshCw className="w-10 h-10 text-brand-gold animate-spin" />
           <h3 className="text-sm font-black uppercase tracking-wider text-brand-gold">Compiling Regional Statistics...</h3>
           <p className="text-xs text-slate-400 max-w-sm leading-relaxed">Gemini is processing rainfall telemetry and road construction updates to compile your safety bulletin.</p>
@@ -75,16 +75,16 @@ export default function SafetyDigest({ reports }: SafetyDigestProps) {
 
       {/* Digest Output */}
       {digest && !isGenerating && (
-        <div className="bg-zinc-900 border border-white/5 rounded-3xl p-6 shadow-2xl relative space-y-6 animate-fade-in">
+        <div className="bg-zinc-950 border border-white/10 rounded-3xl p-6 shadow-2xl relative space-y-6 animate-fade-in">
           
           {/* Badge indicator */}
-          <div className="absolute top-6 right-6 bg-brand-gold/10 border border-brand-gold/20 text-brand-gold font-mono text-[9px] px-3 py-1 rounded-full font-black uppercase flex items-center gap-1">
+          <div className="absolute top-6 right-6 bg-brand-gold/10 border border-brand-gold/30 text-brand-gold font-mono text-[9px] px-3 py-1 rounded-full font-black uppercase flex items-center gap-1">
             <Cpu className="w-3.5 h-3.5" />
             Gemini Synthesis Active
           </div>
 
           {/* Newspaper Masthead */}
-          <div className="border-b-2 border-white/5 pb-5">
+          <div className="border-b-2 border-white/10 pb-5">
             <div className="flex items-center justify-between flex-wrap gap-2 text-slate-500 font-mono text-[9px] uppercase font-bold mb-1.5">
               <span className="flex items-center gap-1.5 tracking-wider">
                 <Calendar className="w-3.5 h-3.5" />
@@ -100,13 +100,13 @@ export default function SafetyDigest({ reports }: SafetyDigestProps) {
           {/* Core Story Summary */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="md:col-span-2 space-y-4">
-              <h3 className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] border-b border-white/5 pb-2">Executive Summary</h3>
+              <h3 className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] border-b border-white/10 pb-2">Executive Summary</h3>
               <p className="text-slate-300 text-sm leading-relaxed first-letter:text-4xl first-letter:font-black first-letter:text-brand-gold first-letter:mr-2.5 first-letter:float-left">
                 {digest.summary}
               </p>
 
               {/* District trends indicator */}
-              <div className="bg-zinc-950 p-4 rounded-2xl border border-white/5 flex items-center justify-between">
+              <div className="bg-zinc-950 p-4 rounded-2xl border border-white/10 flex items-center justify-between">
                 <div>
                   <span className="text-xs font-bold text-slate-200">District Commute Trend</span>
                   <p className="text-[10px] text-slate-500 mt-0.5">Statistical risk variance compared to last week.</p>
@@ -114,10 +114,10 @@ export default function SafetyDigest({ reports }: SafetyDigestProps) {
 
                 <div className={`flex items-center gap-1 px-3 py-1.5 rounded-xl font-black text-[10px] uppercase tracking-wider border ${
                   digest.trend === 'improving'
-                    ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20'
+                    ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30'
                     : digest.trend === 'stable'
-                    ? 'bg-zinc-800 text-slate-300 border-white/5'
-                    : 'bg-brand-red/10 text-brand-red border-brand-red/20 animate-pulse'
+                    ? 'bg-zinc-900 text-slate-300 border-white/10'
+                    : 'bg-brand-red/10 text-brand-red border-brand-red/30 animate-pulse'
                 }`}>
                   {digest.trend === 'improving' ? (
                     <TrendingUp className="w-3.5 h-3.5" />
@@ -130,8 +130,8 @@ export default function SafetyDigest({ reports }: SafetyDigestProps) {
             </div>
 
             {/* Top Regional Concerns list */}
-            <div className="bg-zinc-950 border border-white/5 p-5 rounded-2xl space-y-3.5">
-              <h3 className="text-[10px] font-black text-brand-red uppercase tracking-[0.2em] flex items-center gap-1.5 border-b border-white/5 pb-2">
+            <div className="bg-zinc-950 border border-white/10 p-5 rounded-2xl space-y-3.5">
+              <h3 className="text-[10px] font-black text-brand-red uppercase tracking-[0.2em] flex items-center gap-1.5 border-b border-white/10 pb-2">
                 <AlertTriangle className="w-4 h-4" />
                 Active District Risks
               </h3>
@@ -142,14 +142,14 @@ export default function SafetyDigest({ reports }: SafetyDigestProps) {
                     hazardText = hazard;
                   } else if (hazard && typeof hazard === 'object') {
                     const label = hazard.type ? hazard.type.replace('_', ' ').toUpperCase() : 'ROAD RISK';
-                    const desc = hazard.description || hazard.summary || '';
-                    hazardText = `${label}${desc ? ': ' + desc : ''}`;
+                    const loc = hazard.description || hazard.summary || '';
+                    hazardText = `${label}${loc ? ': ' + loc : ''}`;
                   } else {
                     hazardText = String(hazard);
                   }
                   return (
                     <div key={idx} className="flex gap-2.5 items-start">
-                      <span className="w-5 h-5 rounded bg-zinc-900 border border-white/5 flex items-center justify-center font-mono font-black text-[10px] text-brand-red flex-shrink-0 mt-0.5">
+                      <span className="w-5 h-5 rounded bg-zinc-950 border border-white/10 flex items-center justify-center font-mono font-black text-[10px] text-brand-red flex-shrink-0 mt-0.5">
                         {idx + 1}
                       </span>
                       <p className="text-xs text-slate-300 leading-relaxed">{hazardText}</p>
@@ -161,7 +161,7 @@ export default function SafetyDigest({ reports }: SafetyDigestProps) {
           </div>
 
           {/* District safety tips */}
-          <div className="border-t border-white/5 pt-5 space-y-3">
+          <div className="border-t border-white/10 pt-5 space-y-3">
             <h3 className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em]">Recommended Actions</h3>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
               {digest.safetyTips.map((tip: any, idx) => {
@@ -174,7 +174,7 @@ export default function SafetyDigest({ reports }: SafetyDigestProps) {
                   tipText = String(tip);
                 }
                 return (
-                  <div key={idx} className="bg-zinc-950/80 border border-white/5 p-4 rounded-2xl flex items-start gap-2.5">
+                  <div key={idx} className="bg-zinc-950 border border-white/10 p-4 rounded-2xl flex items-start gap-2.5">
                     <span className="text-brand-gold font-bold text-sm">✓</span>
                     <p className="text-xs text-slate-300 leading-relaxed">{tipText}</p>
                   </div>

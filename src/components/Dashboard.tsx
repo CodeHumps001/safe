@@ -97,7 +97,7 @@ export default function Dashboard({
     <div className="space-y-6" id="dashboard-deck">
       
       {/* 1. Profile Rank Greeting Widget (Bento Style) */}
-      <div className="bento-card-gradient border border-white/5 rounded-3xl p-6 shadow-xl relative overflow-hidden flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+      <div className="bento-card-gradient border border-white/10 rounded-3xl p-6 shadow-xl relative overflow-hidden flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
         <div className="absolute top-0 right-0 p-6 opacity-10">
           <div className="w-16 h-16 rounded-full border border-brand-gold flex items-center justify-center">
             <div className="w-4 h-4 bg-brand-gold rounded-full"></div>
@@ -105,13 +105,13 @@ export default function Dashboard({
         </div>
 
         <div className="relative z-10 flex items-center gap-4">
-          <div className="w-14 h-14 rounded-2xl bg-brand-gold/10 border border-brand-gold/20 flex items-center justify-center text-brand-gold text-3xl shadow-lg shadow-brand-gold/5">
+          <div className="w-14 h-14 rounded-2xl bg-brand-gold/10 border border-brand-gold/25 flex items-center justify-center text-brand-gold text-3xl shadow-lg shadow-brand-gold/5">
             <Award className="w-8 h-8" />
           </div>
           <div>
             <div className="flex items-center gap-2">
               <h1 className="font-display font-black tracking-tight text-2xl text-white">Akwaaba, {profile.name}!</h1>
-              <span className="bg-brand-gold/10 border border-brand-gold/20 text-brand-gold text-[10px] font-black px-2.5 py-1 rounded-full uppercase tracking-wider font-mono">
+              <span className="bg-brand-gold/15 border border-brand-gold/30 text-brand-gold text-[10px] font-black px-2.5 py-1 rounded-full uppercase tracking-wider font-mono">
                 {profile.reputationLevel}
               </span>
             </div>
@@ -127,8 +127,8 @@ export default function Dashboard({
             <span>Reputation PROGRESS</span>
             <span className="text-brand-gold font-mono">{profile.reputationPoints} / 1000 XP</span>
           </div>
-          <div className="w-full h-2.5 bg-zinc-950 rounded-full overflow-hidden border border-white/5">
-            <div className="h-full bg-gradient-to-r from-brand-green to-brand-gold rounded-full" style={{ width: `${(profile.reputationPoints / 1000) * 100}%` }} />
+          <div className="w-full h-2.5 bg-zinc-950 rounded-full overflow-hidden border border-white/10">
+            <div className="h-full bg-gradient-to-r from-brand-green via-brand-gold to-brand-red rounded-full shadow-[0_0_10px_rgba(245,158,11,0.5)]" style={{ width: `${(profile.reputationPoints / 1000) * 100}%` }} />
           </div>
           <p className="text-[9px] text-slate-500 text-right font-mono uppercase tracking-wider">320 XP to Platinum Tier</p>
         </div>
@@ -136,7 +136,7 @@ export default function Dashboard({
 
       {/* 2. Key Metric Stat Cards (Bento Grid Style) */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        <div className="bg-zinc-900 border border-white/5 p-5 rounded-3xl shadow-xl flex flex-col justify-between">
+        <div className="bento-card-gradient border border-white/10 p-5 rounded-3xl shadow-xl flex flex-col justify-between">
           <div className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-500 mb-2">My Reports</div>
           <div className="text-3xl font-black tracking-tighter text-white font-mono">{profile.reportsSubmitted}</div>
           <div className="text-[10px] text-emerald-400 font-bold mt-2.5 flex items-center gap-1">
@@ -144,17 +144,17 @@ export default function Dashboard({
           </div>
         </div>
 
-        <div className="bg-zinc-900 border border-white/5 p-5 rounded-3xl shadow-xl flex flex-col justify-between">
+        <div className="bento-card-gradient border border-white/10 p-5 rounded-3xl shadow-xl flex flex-col justify-between">
           <div className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-500 mb-2">Verified Rate</div>
           <div className="text-3xl font-black tracking-tighter text-brand-gold font-mono">
-            {((profile.reportsVerified / profile.reportsSubmitted) * 100).toFixed(0)}%
+            {profile.reportsSubmitted > 0 ? ((profile.reportsVerified / profile.reportsSubmitted) * 100).toFixed(0) : 100}%
           </div>
           <div className="text-[10px] text-slate-400 mt-2.5">
             {profile.reportsVerified} reports verified
           </div>
         </div>
 
-        <div className="bg-zinc-900 border border-white/5 p-5 rounded-3xl shadow-xl flex flex-col justify-between">
+        <div className="bento-card-gradient border border-white/10 p-5 rounded-3xl shadow-xl flex flex-col justify-between">
           <div className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-500 mb-2">Upvotes Received</div>
           <div className="text-3xl font-black tracking-tighter text-white font-mono">+{profile.upvotesReceived}</div>
           <div className="text-[10px] text-brand-gold font-bold mt-2.5 flex items-center gap-0.5">
@@ -162,7 +162,7 @@ export default function Dashboard({
           </div>
         </div>
 
-        <div className="bg-zinc-900 border border-white/5 p-5 rounded-3xl shadow-xl flex flex-col justify-between">
+        <div className="bento-card-gradient border border-white/10 p-5 rounded-3xl shadow-xl flex flex-col justify-between">
           <div className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-500 mb-2">Active Alerts</div>
           <div className="text-3xl font-black tracking-tighter text-brand-red font-mono">{activeReports.length}</div>
           <div className="text-[10px] text-brand-red font-bold mt-2.5 flex items-center gap-1">
@@ -172,8 +172,8 @@ export default function Dashboard({
       </div>
 
       {/* 3. Star AI Feature: Real-time Route Safety Scorer (Bento Grid Style) */}
-      <div className="bento-card-gradient border border-white/5 rounded-3xl p-6 shadow-xl relative overflow-hidden">
-        <div className="absolute top-6 right-6 bg-brand-gold/10 border border-brand-gold/20 text-brand-gold font-mono text-[9px] px-3 py-1 rounded-full font-black uppercase flex items-center gap-1 shadow-sm">
+      <div className="bento-card-gradient border border-white/10 rounded-3xl p-6 shadow-xl relative overflow-hidden">
+        <div className="absolute top-6 right-6 bg-brand-gold/10 border border-brand-gold/25 text-brand-gold font-mono text-[9px] px-3 py-1 rounded-full font-black uppercase flex items-center gap-1 shadow-sm">
           <Cpu className="w-3.5 h-3.5" />
           GEMINI AI COGNITION
         </div>
@@ -195,7 +195,7 @@ export default function Dashboard({
             <select
               value={selectedRouteKey}
               onChange={(e) => handleRouteScoring(e.target.value)}
-              className="w-full bg-zinc-950 border border-white/5 rounded-xl px-4 py-3 text-slate-100 text-xs focus:outline-none focus:ring-1 focus:ring-brand-gold cursor-pointer"
+              className="w-full bg-zinc-950 border border-white/10 rounded-xl px-4 py-3 text-slate-100 text-xs focus:outline-none focus:ring-1 focus:ring-brand-gold cursor-pointer"
             >
               <option value="">-- Choose travel route --</option>
               {Object.entries(ACCRA_PRESET_ROUTES).map(([key, route]) => (
@@ -208,7 +208,7 @@ export default function Dashboard({
             <div className="flex items-end pb-1">
               <button
                 onClick={() => handleRouteScoring(selectedRouteKey)}
-                className="bg-zinc-800 hover:bg-zinc-700 text-slate-200 text-xs font-semibold px-4 py-3 rounded-xl border border-white/5 flex items-center gap-1.5 transition-all"
+                className="bg-zinc-900 hover:bg-zinc-800 text-slate-200 text-xs font-semibold px-4 py-3 rounded-xl border border-white/10 flex items-center gap-1.5 transition-all"
               >
                 <RefreshCw className={`w-3.5 h-3.5 ${isScoringRoute ? 'animate-spin' : ''}`} />
                 Recalculate route safety
@@ -219,7 +219,7 @@ export default function Dashboard({
 
         {/* AI Route Scorer Results Panel */}
         {isScoringRoute && (
-          <div className="bg-zinc-950/80 border border-brand-gold/20 rounded-2xl p-8 mt-6 text-center flex flex-col items-center justify-center space-y-3">
+          <div className="bg-zinc-950 border border-brand-gold/30 rounded-2xl p-8 mt-6 text-center flex flex-col items-center justify-center space-y-3 shadow-2xl">
             <RefreshCw className="w-8 h-8 text-brand-gold animate-spin" />
             <div className="text-sm font-black uppercase tracking-wider text-brand-gold">Gemini scoring pavement anomalies...</div>
             <p className="text-xs text-slate-400 max-w-sm leading-relaxed">Analyzing distance intervals to active pothole grids and calculating seasonal washouts.</p>
@@ -227,15 +227,15 @@ export default function Dashboard({
         )}
 
         {routeAnalysis && !isScoringRoute && (
-          <div className="bg-zinc-950 rounded-2xl border border-white/5 p-5 mt-6 space-y-5 animate-fade-in">
-            <div className="flex items-center justify-between flex-wrap gap-4 border-b border-white/5 pb-4">
+          <div className="bg-zinc-950 rounded-2xl border border-white/10 p-5 mt-6 space-y-5 animate-fade-in shadow-2xl">
+            <div className="flex items-center justify-between flex-wrap gap-4 border-b border-white/10 pb-4">
               <div className="flex items-center gap-3.5">
                 <div className={`w-14 h-14 rounded-2xl flex items-center justify-center font-display font-black text-3xl shadow-lg border ${
                   routeAnalysis.score >= 80
-                    ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20 shadow-emerald-500/5'
+                    ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30 shadow-emerald-500/10'
                     : routeAnalysis.score >= 60
-                    ? 'bg-yellow-500/10 text-yellow-400 border-yellow-500/20 shadow-yellow-500/5'
-                    : 'bg-red-500/10 text-brand-red border-red-500/20 shadow-red-500/5 animate-pulse'
+                    ? 'bg-yellow-500/10 text-yellow-400 border-yellow-500/30 shadow-yellow-500/10'
+                    : 'bg-red-500/10 text-brand-red border-red-500/30 shadow-red-500/10 animate-pulse'
                 }`}>
                   {routeAnalysis.grade}
                 </div>
@@ -254,7 +254,7 @@ export default function Dashboard({
             </div>
 
             {routeAnalysis.criticalWarnings.length > 0 && (
-              <div className="bg-brand-red/10 border border-brand-red/20 p-3.5 rounded-xl space-y-1">
+              <div className="bg-brand-red/10 border border-brand-red/25 p-3.5 rounded-xl space-y-1 shadow-inner">
                 <div className="text-xs font-bold text-brand-red flex items-center gap-1.5 uppercase tracking-wide">
                   <AlertOctagon className="w-4 h-4" />
                   Immediate Roadway Hazards Detected
@@ -291,7 +291,7 @@ export default function Dashboard({
                     recText = String(rec);
                   }
                   return (
-                    <div key={idx} className="bg-zinc-900 border border-white/5 p-3 rounded-xl flex items-start gap-2.5">
+                    <div key={idx} className="bg-zinc-950 border border-white/10 p-3 rounded-xl flex items-start gap-2.5">
                       <span className="text-brand-gold font-bold text-xs mt-0.5">✓</span>
                       <p className="text-[11px] text-slate-300 leading-normal">{recText}</p>
                     </div>
@@ -316,15 +316,15 @@ export default function Dashboard({
             return (
               <div
                 key={report.id}
-                className={`bg-zinc-900 border rounded-3xl transition-all shadow-md overflow-hidden ${
-                  isInspecting ? 'border-brand-gold bg-zinc-900/95 shadow-xl shadow-brand-gold/5' : 'border-white/5 hover:border-white/10'
+                className={`bg-zinc-950 border rounded-3xl transition-all shadow-md overflow-hidden ${
+                  isInspecting ? 'border-brand-gold bg-zinc-950 shadow-2xl shadow-brand-gold/10' : 'border-white/10 hover:border-brand-gold/30'
                 }`}
               >
                 {/* Header */}
                 <div className="p-5 flex gap-4 items-start">
                   <button
                     onClick={() => onSelectReport(report)}
-                    className="w-12 h-12 rounded-2xl bg-zinc-950 border border-white/5 flex items-center justify-center text-2xl hover:scale-110 active:scale-90 transition-transform flex-shrink-0"
+                    className="w-12 h-12 rounded-2xl bg-zinc-950 border border-white/10 flex items-center justify-center text-2xl hover:scale-110 active:scale-90 transition-transform flex-shrink-0"
                     title="Zoom in on Map"
                   >
                     {config.emoji}
@@ -342,11 +342,11 @@ export default function Dashboard({
                 </div>
 
                 {/* Report Action buttons */}
-                <div className="bg-zinc-950/80 px-5 py-3 flex items-center justify-between border-t border-white/5 flex-wrap gap-2 text-[10px] font-bold text-slate-400">
+                <div className="bg-zinc-950 px-5 py-3 flex items-center justify-between border-t border-white/10 flex-wrap gap-2 text-[10px] font-bold text-slate-400">
                   <div className="flex items-center gap-4">
                     <button
                       onClick={() => onUpvoteReport(report.id)}
-                      className={`flex items-center gap-1.5 hover:text-brand-gold transition-colors ${report.userVoted === 'up' ? 'text-brand-gold' : ''}`}
+                      className={`flex items-center gap-1.5 hover:text-brand-gold transition-colors ${report.userVoted === 'up' ? 'text-brand-gold font-bold' : ''}`}
                     >
                       <ThumbsUp className="w-3.5 h-3.5" />
                       Verify ({report.upvotes})
@@ -364,7 +364,7 @@ export default function Dashboard({
 
                 {/* Inspecting comment Thread Panel */}
                 {isInspecting && (
-                  <div className="p-5 bg-zinc-950 border-t border-white/5 space-y-4 animate-fade-in">
+                  <div className="p-5 bg-zinc-950 border-t border-white/10 space-y-4 animate-fade-in">
                     <div className="text-[9px] font-black uppercase tracking-[0.2em] text-slate-500 mb-2">Discussion Thread</div>
                     
                     {report.comments.length === 0 ? (
@@ -372,7 +372,7 @@ export default function Dashboard({
                     ) : (
                       <div className="space-y-3 max-h-48 overflow-y-auto pr-1">
                         {report.comments.map((comment) => (
-                          <div key={comment.id} className="bg-zinc-900 border border-white/5 p-3 rounded-2xl space-y-1">
+                          <div key={comment.id} className="bg-zinc-950 border border-white/10 p-3 rounded-2xl space-y-1">
                             <div className="flex justify-between items-center text-[9px] font-bold uppercase tracking-wider">
                               <span className="text-slate-200">{comment.userName} ({comment.userRole})</span>
                               <span className="text-slate-500 font-mono">{new Date(comment.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
@@ -390,7 +390,7 @@ export default function Dashboard({
                         placeholder="Provide status update (e.g. water receded, road cleared...)"
                         value={newCommentText}
                         onChange={(e) => setNewCommentText(e.target.value)}
-                        className="flex-1 bg-zinc-900 border border-white/5 rounded-xl px-4 py-2.5 text-xs text-slate-100 placeholder:text-slate-500 focus:outline-none focus:ring-1 focus:ring-brand-gold"
+                        className="flex-1 bg-zinc-950 border border-white/10 rounded-xl px-4 py-2.5 text-xs text-slate-100 placeholder:text-slate-500 focus:outline-none focus:ring-1 focus:ring-brand-gold"
                       />
                       <button
                         onClick={() => handlePostComment(report.id)}

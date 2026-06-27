@@ -125,6 +125,31 @@ export default function MapContainer({
     };
   }, [isReportingMode]);
 
+  // Handle container resizing to fix Leaflet gray area bug
+  useEffect(() => {
+    if (!mapRef.current || !mapContainerRef.current) return;
+
+    const resizeObserver = new ResizeObserver(() => {
+      if (mapRef.current) {
+        mapRef.current.invalidateSize();
+      }
+    });
+
+    resizeObserver.observe(mapContainerRef.current);
+
+    // Initial timeout trigger for extra robustness
+    const timer = setTimeout(() => {
+      if (mapRef.current) {
+        mapRef.current.invalidateSize();
+      }
+    }, 250);
+
+    return () => {
+      resizeObserver.disconnect();
+      clearTimeout(timer);
+    };
+  }, [mapLoaded]);
+
   // Handle map type toggle
   useEffect(() => {
     if (!mapRef.current) return;

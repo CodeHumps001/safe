@@ -281,7 +281,7 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[#0a0a0b] flex flex-col font-sans text-slate-100 pb-16 md:pb-0" id="saferoute-root">
+    <div className="min-h-screen bg-[#050506] flex flex-col font-sans text-slate-100 pb-16 md:pb-0" id="saferoute-root">
       
       {/* Brand Header */}
       <Navbar
@@ -303,7 +303,7 @@ export default function App() {
       <main className="flex-1 flex flex-col md:flex-row relative overflow-hidden h-[calc(100vh-73px-64px)] md:h-[calc(100vh-73px)]">
         
         {/* Dynamic Sidebar / Tab view switcher */}
-        <div className={`flex-1 md:w-[480px] md:max-w-xl md:flex-shrink-0 bg-[#0a0a0b] border-r border-white/5 p-4 md:p-6 overflow-y-auto h-full ${
+        <div className={`flex-1 md:w-[480px] md:max-w-xl md:flex-shrink-0 bg-[#050506] border-r border-white/10 p-4 md:p-6 overflow-y-auto h-full ${
           activeTab === 'map' && !isReportingMode ? 'hidden md:block' : 'block'
         }`}>
           {isReportingMode ? (
@@ -320,7 +320,7 @@ export default function App() {
               {activeTab === 'map' && (
                 <div className="space-y-6">
                   {/* Floating CTA to launch report form */}
-                  <div className="bento-card-gradient border border-white/5 rounded-3xl p-6 shadow-xl relative overflow-hidden">
+                  <div className="bento-card-gradient border border-white/10 rounded-3xl p-6 shadow-xl relative overflow-hidden">
                     <div className="absolute top-0 right-0 p-6 opacity-30">
                       <div className="w-10 h-10 rounded-full border border-brand-gold/30 flex items-center justify-center">
                         <div className="w-2 h-2 bg-brand-gold rounded-full animate-ping"></div>
@@ -343,7 +343,7 @@ export default function App() {
                             // Default to center of Accra if no coords
                             setReportingCoords({ lat: 5.6037, lng: -0.1870 });
                           }}
-                          className="bg-brand-gold hover:bg-amber-400 text-slate-950 text-[10px] uppercase tracking-widest font-black px-5 py-3 rounded-xl shadow-lg shadow-brand-gold/10 flex items-center gap-1.5 transition-all active:scale-95 cursor-pointer"
+                          className="bg-brand-gold hover:bg-amber-400 text-slate-950 text-[10px] uppercase tracking-widest font-black px-5 py-3 rounded-xl shadow-lg shadow-brand-gold/20 flex items-center gap-1.5 transition-all active:scale-95 cursor-pointer"
                         >
                           📍 Spot-pick on Map
                         </button>
@@ -352,7 +352,7 @@ export default function App() {
                   </div>
 
                   {/* Tiny instructions panel */}
-                  <div className="bg-zinc-900/40 border border-white/5 rounded-3xl p-5 space-y-3 text-slate-400 text-xs leading-relaxed">
+                  <div className="bg-zinc-950/50 border border-white/10 rounded-3xl p-5 space-y-3 text-slate-400 text-xs leading-relaxed">
                     <div className="font-black text-brand-gold uppercase tracking-[0.2em] text-[9px] flex items-center gap-1">
                       <HelpCircle className="w-3.5 h-3.5" />
                       Map Operations guide

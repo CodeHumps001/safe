@@ -8,7 +8,7 @@ interface BottomNavProps {
 
 export default function BottomNav({ activeTab, setActiveTab }: BottomNavProps) {
   return (
-    <div className="md:hidden fixed bottom-0 left-0 right-0 bg-[#0a0a0b]/95 border-t border-white/5 py-3.5 px-6 flex justify-around items-center z-[99] backdrop-blur-md shadow-2xl">
+    <div className="md:hidden fixed bottom-0 left-0 right-0 bg-[#050506]/95 border-t border-white/10 py-3.5 px-6 flex justify-around items-center z-[99] backdrop-blur-md shadow-2xl">
       <button
         onClick={() => setActiveTab('map')}
         className={`flex flex-col items-center gap-1 cursor-pointer transition-all ${
