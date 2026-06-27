@@ -1,22 +1,21 @@
+@import "leaflet/dist/leaflet.css";
 @import "tailwindcss";
 
 @theme {
   --font-sans: "Inter", system-ui, sans-serif;
   --font-display: "Plus Jakarta Sans", system-ui, sans-serif;
   --font-mono: "JetBrains Mono", monospace;
-  --color-brand-green: #00A651;
-  --color-brand-gold: #f59e0b; /* Vibrant amber gold */
-  --color-brand-red: #CE1126;  /* Deep national red */
-  --color-bg-deep: #050506;   /* Extremely premium obsidian pitch black */
+  --color-brand-green: #00a651;
+  --color-brand-gold: #f59e0b;
+  --color-brand-red: #ce1126;
+  --color-bg-deep: #050506;
 }
 
-/* Base body reset for high contrast, high-end visual weight */
 body {
   background-color: #050506 !important;
   color: #f8fafc;
 }
 
-/* Custom scrollbar styling for slick bento layout */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
@@ -32,7 +31,6 @@ body {
   background: #f59e0b;
 }
 
-/* Elegant Leaflet Popups mapping to Bento card aesthetics */
 .leaflet-popup-content-wrapper {
   background-color: #0c0c0e !important;
   color: #f8fafc !important;
@@ -52,7 +50,47 @@ body {
   background: #050506 !important;
 }
 
-/* Custom premium-style glassmorphism panel overlay */
+/* Fix: leaflet marker z-index so it sits above the map tiles */
+.leaflet-pane {
+  z-index: 4 !important;
+}
+.leaflet-tile-pane {
+  z-index: 2 !important;
+}
+.leaflet-overlay-pane {
+  z-index: 5 !important;
+}
+.leaflet-shadow-pane {
+  z-index: 5 !important;
+}
+.leaflet-marker-pane {
+  z-index: 6 !important;
+}
+.leaflet-tooltip-pane {
+  z-index: 7 !important;
+}
+.leaflet-popup-pane {
+  z-index: 8 !important;
+}
+.leaflet-map-pane canvas {
+  z-index: 1 !important;
+}
+.leaflet-map-pane svg {
+  z-index: 2 !important;
+}
+
+/* Keeps custom marker divs from clipping */
+.custom-hazard-marker {
+  overflow: visible !important;
+  background: none !important;
+  border: none !important;
+}
+.temp-marker {
+  overflow: visible !important;
+  background: none !important;
+  border: none !important;
+}
+
 .glass-panel {
   background: rgba(12, 12, 14, 0.85);
   backdrop-filter: blur(24px);
@@ -60,42 +98,67 @@ body {
   border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-/* Premium Card Style definitions - replaces washed-out grays with metallic-finish cards */
 .bento-card-gradient {
   background: linear-gradient(135deg, #0e0e11 0%, #060607 100%);
   border: 1px solid rgba(255, 255, 255, 0.07);
 }
-
 .bento-card-gradient:hover {
   border-color: rgba(245, 158, 11, 0.2);
   box-shadow: 0 10px 30px -15px rgba(245, 158, 11, 0.15);
 }
 
-/* Dynamic glowing border effect */
 .glow-gold {
   box-shadow: 0 0 25px -5px rgba(245, 158, 11, 0.2);
 }
-
 .glow-green {
   box-shadow: 0 0 25px -5px rgba(0, 166, 81, 0.2);
 }
-
 .glow-red {
   box-shadow: 0 0 25px -5px rgba(206, 17, 38, 0.2);
 }
 
-/* Fade-in & scaling animations */
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(8px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
-
 .animate-fade-in {
   animation: fadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes fadeInRight {
+  from {
+    opacity: 0;
+    transform: translateX(-12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+.animate-fade-in-right {
+  animation: fadeInRight 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.animate-fade-in-up {
+  animation: fadeInUp 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 .animate-spin-slow {
   animation: spin 8s linear infinite;
 }
-
-
