@@ -67,13 +67,15 @@ export default function MapContainer({
 
   // Initialize Map
   useEffect(() => {
-    if (!mapContainerRef.current || mapRef.current) return;
+    const mapElement = document.getElementById('saferoute-leaflet-map-element');
+    if (!mapElement || mapRef.current) return;
 
     // Accra center coordinates
     const defaultCenter: L.LatLngExpression = [5.6037, -0.1870];
     const initialZoom = 13;
 
-    const map = L.map(mapContainerRef.current, {
+    // Explicitly call L.map with confirmed DOM element id and setView
+    const map = L.map('saferoute-leaflet-map-element', {
       zoomControl: false,
       attributionControl: false
     }).setView(defaultCenter, initialZoom);
@@ -375,7 +377,7 @@ export default function MapContainer({
   return (
     <div className="w-full h-full relative" id="saferoute-map-container">
       {/* Real Leaflet Map mount */}
-      <div ref={mapContainerRef} className="w-full h-full absolute inset-0 z-0 bg-slate-900 rounded-3xl" />
+      <div id="saferoute-leaflet-map-element" ref={mapContainerRef} className="w-full h-full absolute inset-0 z-0 bg-slate-900 rounded-3xl" />
 
       {/* Floating Header Overlay: Filters & Status */}
       <div className="absolute top-4 left-4 right-4 z-[10] flex flex-wrap gap-2 items-center justify-between pointer-events-none">

@@ -245,4 +245,28 @@ body {
   border: 1px solid rgba(0, 0, 0, 0.08) !important;
 }
 
+/* ==========================================
+   TAILWIND-LEAFLET COMPATIBILITY FIXES
+   ========================================== */
+.leaflet-container img {
+  max-width: none !important;
+  max-height: none !important;
+}
+
+.leaflet-container .leaflet-tile {
+  max-width: none !important;
+  max-height: none !important;
+}
+
+.leaflet-container .leaflet-tile-pane img {
+  max-width: none !important;
+  max-height: none !important;
+}
+
+.leaflet-container .leaflet-overlay-pane svg {
+  max-width: none !important;
+  max-height: none !important;
+}
+
+
 
