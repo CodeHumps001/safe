@@ -330,6 +330,7 @@ export default function App() {
                 setReportingCoords(null);
               }}
               selectedCoords={reportingCoords}
+              onSelectCoords={handleSelectCoordsFromMap}
             />
           ) : (
             <>
@@ -425,6 +426,22 @@ export default function App() {
             <div className="absolute top-4 left-4 z-[99] pointer-events-auto bg-brand-gold text-slate-950 font-bold text-xs px-4 py-2.5 rounded-xl shadow-2xl flex items-center gap-2 animate-fade-in-right">
               <AlertOctagon className="w-4 h-4 animate-spin-slow" />
               Double click on the road map surface to drop a hazard pin!
+            </div>
+          )}
+
+          {!isReportingMode && activeTab === 'map' && (
+            <div className="absolute bottom-6 right-6 z-[99] md:hidden">
+              <button
+                onClick={() => {
+                  setIsReportingMode(true);
+                  // Default to center of Accra
+                  setReportingCoords({ lat: 5.6037, lng: -0.1870 });
+                }}
+                className="bg-brand-gold hover:bg-amber-400 text-slate-950 text-xs font-black px-6 py-4 rounded-full shadow-2xl flex items-center gap-2 transition-all active:scale-95 cursor-pointer border border-slate-950/20"
+              >
+                <PlusCircle className="w-5 h-5" />
+                REPORT HAZARD
+              </button>
             </div>
           )}
 

@@ -8,6 +8,7 @@ interface ReportFormProps {
   onAddReport: (report: Omit<HazardReport, 'id' | 'createdAt' | 'comments' | 'reporterName' | 'reporterRole' | 'reporterReputation' | 'upvotes' | 'downvotes' | 'status'> & { photoData?: string }) => void;
   onCancel: () => void;
   selectedCoords: { lat: number; lng: number } | null;
+  onSelectCoords?: (coords: { lat: number; lng: number }) => void;
 }
 
 // Compact, real-world low-resolution base64 string mockups to send to the backend,
@@ -19,8 +20,47 @@ const MOCK_PHOTOS = {
   construction: 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7'
 };
 
-export default function ReportForm({ onAddReport, onCancel, selectedCoords }: ReportFormProps) {
+const GHANA_PRESETS = [
+  { name: 'East Legon, Accra', coords: { lat: 5.6321, lng: -0.1554 } },
+  { name: 'Alajo Underpass, Accra', coords: { lat: 5.5972, lng: -0.2104 } },
+  { name: 'Adum, Kumasi', coords: { lat: 6.6892, lng: -1.6214 } },
+  { name: 'Madina Highway, Accra', coords: { lat: 5.6781, lng: -0.1652 } },
+  { name: 'Circle Interchange, Accra', coords: { lat: 5.5683, lng: -0.2117 } },
+  { name: 'Takoradi Harbour Rd', coords: { lat: 4.8986, lng: -1.7483 } }
+];
+
+export default function ReportForm({ onAddReport, onCancel, selectedCoords, onSelectCoords }: ReportFormProps) {
   const [step, setStep] = useState<1 | 2 | 3>(1);
+  const [gpsError, setGpsError] = useState<string | null>(null);
+  const [isGpsLoading, setIsGpsLoading] = useState(false);
+
+  const handleUseGps = () => {
+    if (!navigator.geolocation) {
+      setGpsError('GPS geolocation not supported by browser.');
+      return;
+    }
+    setIsGpsLoading(true);
+    setGpsError(null);
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const coords = {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude
+        };
+        if (onSelectCoords) {
+          onSelectCoords(coords);
+        }
+        setIsGpsLoading(false);
+      },
+      (error) => {
+        console.error(error);
+        setGpsError('GPS error. Please pick a preset or double-tap the map.');
+        setIsGpsLoading(false);
+      },
+      { enableHighAccuracy: true, timeout: 8000 }
+    );
+  };
+
   const [hazardType, setHazardType] = useState<HazardType>('pothole');
   const [severity, setSeverity] = useState<SeverityLevel>('medium');
   const [locationName, setLocationName] = useState('');
@@ -155,10 +195,52 @@ export default function ReportForm({ onAddReport, onCancel, selectedCoords }: Re
                   Lat: <span className="text-brand-gold">{latStr}</span> | Lng: <span className="text-brand-gold">{lngStr}</span>
                 </div>
                 <p className="text-[10px] text-slate-500 mt-1.5 leading-relaxed">
-                  {selectedCoords ? '🎯 Location selected. Double click elsewhere on the map to modify.' : '👈 Double click a point directly on the main map to set coordinates.'}
+                  {selectedCoords ? '🎯 Location selected.' : '👈 Select on map, use GPS, or pick a Preset below.'}
                 </p>
               </div>
             </div>
+
+            {/* GPS & Preset Quick Locators (Critical for Mobile) */}
+            <div className="grid grid-cols-2 gap-2.5">
+              <button
+                type="button"
+                onClick={handleUseGps}
+                disabled={isGpsLoading}
+                className="bg-brand-gold hover:bg-amber-400 text-slate-950 font-black text-[10px] tracking-wider uppercase py-2.5 px-3 rounded-xl flex items-center justify-center gap-1.5 transition-all cursor-pointer disabled:opacity-60"
+              >
+                {isGpsLoading ? (
+                  <RefreshCw className="w-3.5 h-3.5 animate-spin" />
+                ) : (
+                  <span>⚡ Live GPS</span>
+                )}
+              </button>
+
+              <select
+                onChange={(e) => {
+                  const idx = parseInt(e.target.value);
+                  if (!isNaN(idx)) {
+                    const preset = GHANA_PRESETS[idx];
+                    if (onSelectCoords) {
+                      onSelectCoords(preset.coords);
+                    }
+                    setLocationName(preset.name);
+                  }
+                }}
+                className="bg-zinc-900 text-slate-300 font-bold text-[10px] uppercase tracking-wider py-2.5 px-3 rounded-xl border border-white/10 focus:outline-none cursor-pointer"
+                defaultValue=""
+              >
+                <option value="" disabled>📍 GH Hotspots</option>
+                {GHANA_PRESETS.map((preset, idx) => (
+                  <option key={idx} value={idx}>{preset.name}</option>
+                ))}
+              </select>
+            </div>
+
+            {gpsError && (
+              <p className="text-[9px] font-mono text-rose-400 text-center bg-rose-950/20 py-1.5 px-2.5 rounded-xl border border-rose-900/30">
+                {gpsError}
+              </p>
+            )}
 
             <div className="space-y-1.5">
               <label className="text-[10px] font-black uppercase tracking-[0.15em] text-slate-500">Spot Name / Near Landmarks</label>
