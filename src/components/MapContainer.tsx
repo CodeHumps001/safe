@@ -48,6 +48,17 @@ export default function MapContainer({
   const [userCoords, setUserCoords] = useState<{ lat: number; lng: number } | null>(null);
   const [mapLoaded, setMapLoaded] = useState(false);
 
+  const isReportingModeRef = useRef(isReportingMode);
+  const onSelectCoordsRef = useRef(onSelectCoords);
+
+  useEffect(() => {
+    isReportingModeRef.current = isReportingMode;
+  }, [isReportingMode]);
+
+  useEffect(() => {
+    onSelectCoordsRef.current = onSelectCoords;
+  }, [onSelectCoords]);
+
   // Initialize Map
   useEffect(() => {
     if (!mapContainerRef.current || mapRef.current) return;
@@ -64,7 +75,7 @@ export default function MapContainer({
     mapRef.current = map;
 
     // Default tile layer (CartoDB Dark Matter - looks extremely futuristic and high contrast)
-    const darkTiles = L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+    const darkTiles = L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png', {
       maxZoom: 20,
     }).addTo(map);
 
@@ -72,11 +83,13 @@ export default function MapContainer({
 
     // Map click handling
     map.on('click', (e: L.LeafletMouseEvent) => {
-      if (isReportingMode) {
+      if (isReportingModeRef.current) {
         const { lat, lng } = e.latlng;
-        onSelectCoords({ lat, lng });
+        onSelectCoordsRef.current({ lat, lng });
       }
     });
+
+    let pulseIntervalId: any = null;
 
     // Detect user coordinates on mount
     if (navigator.geolocation) {
@@ -97,15 +110,19 @@ export default function MapContainer({
 
             // Pulse animation
             let growing = true;
-            setInterval(() => {
+            pulseIntervalId = setInterval(() => {
               if (!userPulse || !mapRef.current) return;
-              const currentRadius = userPulse.getRadius();
-              if (growing) {
-                userPulse.setRadius(currentRadius + 0.5);
-                if (currentRadius >= 13) growing = false;
-              } else {
-                userPulse.setRadius(currentRadius - 0.5);
-                if (currentRadius <= 8) growing = true;
+              try {
+                const currentRadius = userPulse.getRadius();
+                if (growing) {
+                  userPulse.setRadius(currentRadius + 0.5);
+                  if (currentRadius >= 13) growing = false;
+                } else {
+                  userPulse.setRadius(currentRadius - 0.5);
+                  if (currentRadius <= 8) growing = true;
+                }
+              } catch (e) {
+                // Ignore any Leaflet errors if unmounted
               }
             }, 100);
 
@@ -118,12 +135,15 @@ export default function MapContainer({
     }
 
     return () => {
+      if (pulseIntervalId) {
+        clearInterval(pulseIntervalId);
+      }
       if (mapRef.current) {
         mapRef.current.remove();
         mapRef.current = null;
       }
     };
-  }, [isReportingMode]);
+  }, []);
 
   // Handle container resizing to fix Leaflet gray area bug
   useEffect(() => {
@@ -162,7 +182,7 @@ export default function MapContainer({
     });
 
     if (mapType === 'dark') {
-      L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+      L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png', {
         maxZoom: 20
       }).addTo(mapRef.current);
     } else {
