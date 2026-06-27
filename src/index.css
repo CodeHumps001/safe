@@ -1,21 +1,22 @@
-@import "leaflet/dist/leaflet.css";
 @import "tailwindcss";
 
 @theme {
   --font-sans: "Inter", system-ui, sans-serif;
   --font-display: "Plus Jakarta Sans", system-ui, sans-serif;
   --font-mono: "JetBrains Mono", monospace;
-  --color-brand-green: #00a651;
-  --color-brand-gold: #f59e0b;
-  --color-brand-red: #ce1126;
-  --color-bg-deep: #050506;
+  --color-brand-green: #00A651;
+  --color-brand-gold: #f59e0b; /* Vibrant amber gold */
+  --color-brand-red: #CE1126;  /* Deep national red */
+  --color-bg-deep: #050506;   /* Extremely premium obsidian pitch black */
 }
 
+/* Base body reset for high contrast, high-end visual weight */
 body {
   background-color: #050506 !important;
   color: #f8fafc;
 }
 
+/* Custom scrollbar styling for slick bento layout */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
@@ -31,6 +32,7 @@ body {
   background: #f59e0b;
 }
 
+/* Elegant Leaflet Popups mapping to Bento card aesthetics */
 .leaflet-popup-content-wrapper {
   background-color: #0c0c0e !important;
   color: #f8fafc !important;
@@ -50,47 +52,7 @@ body {
   background: #050506 !important;
 }
 
-/* Fix: leaflet marker z-index so it sits above the map tiles */
-.leaflet-pane {
-  z-index: 4 !important;
-}
-.leaflet-tile-pane {
-  z-index: 2 !important;
-}
-.leaflet-overlay-pane {
-  z-index: 5 !important;
-}
-.leaflet-shadow-pane {
-  z-index: 5 !important;
-}
-.leaflet-marker-pane {
-  z-index: 6 !important;
-}
-.leaflet-tooltip-pane {
-  z-index: 7 !important;
-}
-.leaflet-popup-pane {
-  z-index: 8 !important;
-}
-.leaflet-map-pane canvas {
-  z-index: 1 !important;
-}
-.leaflet-map-pane svg {
-  z-index: 2 !important;
-}
-
-/* Keeps custom marker divs from clipping */
-.custom-hazard-marker {
-  overflow: visible !important;
-  background: none !important;
-  border: none !important;
-}
-.temp-marker {
-  overflow: visible !important;
-  background: none !important;
-  border: none !important;
-}
-
+/* Custom premium-style glassmorphism panel overlay */
 .glass-panel {
   background: rgba(12, 12, 14, 0.85);
   backdrop-filter: blur(24px);
@@ -98,67 +60,189 @@ body {
   border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
+/* Premium Card Style definitions - replaces washed-out grays with metallic-finish cards */
 .bento-card-gradient {
   background: linear-gradient(135deg, #0e0e11 0%, #060607 100%);
   border: 1px solid rgba(255, 255, 255, 0.07);
 }
+
 .bento-card-gradient:hover {
   border-color: rgba(245, 158, 11, 0.2);
   box-shadow: 0 10px 30px -15px rgba(245, 158, 11, 0.15);
 }
 
+/* Dynamic glowing border effect */
 .glow-gold {
   box-shadow: 0 0 25px -5px rgba(245, 158, 11, 0.2);
 }
+
 .glow-green {
   box-shadow: 0 0 25px -5px rgba(0, 166, 81, 0.2);
 }
+
 .glow-red {
   box-shadow: 0 0 25px -5px rgba(206, 17, 38, 0.2);
 }
 
+/* Fade-in & scaling animations */
 @keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(8px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
 }
+
 .animate-fade-in {
   animation: fadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-
-@keyframes fadeInRight {
-  from {
-    opacity: 0;
-    transform: translateX(-12px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-.animate-fade-in-right {
-  animation: fadeInRight 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(12px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-.animate-fade-in-up {
-  animation: fadeInUp 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 .animate-spin-slow {
   animation: spin 8s linear infinite;
 }
+
+/* ==========================================
+   LIGHT THEME OVERRIDES
+   ========================================== */
+
+/* Apply light class to document element */
+.light, .light body {
+  background-color: #f8fafc !important;
+  color: #0f172a !important;
+}
+
+.light ::-webkit-scrollbar-track {
+  background: #f8fafc !important;
+}
+
+.light ::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.15) !important;
+}
+
+/* Containers and Panel resets */
+.light #saferoute-root,
+.light main,
+.light #navbar-deck {
+  background-color: #f8fafc !important;
+}
+
+.light .bg-[#050506],
+.light .bg-[#050506]\/95,
+.light .bg-[#050506]\/50,
+.light .bg-[#050506]\/40,
+.light .bg-zinc-950,
+.light .bg-zinc-950\/80,
+.light .bg-zinc-950\/50,
+.light .bg-zinc-900,
+.light .bg-zinc-900\/50 {
+  background-color: #ffffff !important;
+}
+
+/* Secondary list items / soft backgrounds */
+.light .bg-zinc-900\/30,
+.light .bg-white\/5,
+.light .bg-[#050506]\/30 {
+  background-color: #f1f5f9 !important;
+}
+
+.light .bg-white\/10 {
+  background-color: #e2e8f0 !important;
+}
+
+/* Text Neutral Colors */
+.light .text-slate-100,
+.light .text-slate-200,
+.light .text-slate-300,
+.light .text-zinc-100,
+.light .text-zinc-200,
+.light .text-zinc-300,
+.light .text-white {
+  color: #0f172a !important;
+}
+
+.light .text-slate-400,
+.light .text-zinc-400 {
+  color: #475569 !important;
+}
+
+.light .text-slate-500,
+.light .text-zinc-500 {
+  color: #64748b !important;
+}
+
+/* Inputs, Textareas, Selects */
+.light input,
+.light textarea,
+.light select {
+  background-color: #ffffff !important;
+  color: #0f172a !important;
+  border-color: rgba(0, 0, 0, 0.12) !important;
+}
+
+.light input::placeholder,
+.light textarea::placeholder {
+  color: #94a3b8 !important;
+}
+
+.light input:focus,
+.light textarea:focus,
+.light select:focus {
+  border-color: #f59e0b !important;
+  box-shadow: 0 0 0 2px rgba(245, 158, 11, 0.2) !important;
+}
+
+/* Borders and Dividers */
+.light .border-white\/10,
+.light .border-white\/5,
+.light .border-zinc-800,
+.light .border-zinc-700,
+.light .divide-white\/10,
+.light .divide-white\/5,
+.light .divide-zinc-800,
+.light .divide-zinc-700 {
+  border-color: rgba(0, 0, 0, 0.08) !important;
+}
+
+/* Cards & Hover states */
+.light .bento-card-gradient {
+  background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%) !important;
+  border-color: rgba(0, 0, 0, 0.06) !important;
+  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.03) !important;
+}
+
+.light .bento-card-gradient:hover {
+  border-color: rgba(245, 158, 11, 0.3) !important;
+  box-shadow: 0 10px 30px -15px rgba(245, 158, 11, 0.1) !important;
+}
+
+/* Special button & interactions hovers */
+.light .hover\:bg-zinc-900:hover,
+.light .hover\:bg-zinc-900\/80:hover {
+  background-color: #f1f5f9 !important;
+}
+
+.light .hover\:bg-white\/5:hover {
+  background-color: rgba(0, 0, 0, 0.04) !important;
+}
+
+.light .hover\:bg-white\/10:hover {
+  background-color: rgba(0, 0, 0, 0.08) !important;
+}
+
+/* Keep user logo block in Navbar and other places black/dark for premium aesthetic */
+.light .bg-gradient-to-tr .bg-[#050506],
+.light .bg-gradient-to-tr .bg-zinc-950 {
+  background-color: #0c0c0e !important;
+}
+
+/* Leaflet map popup style overrides in Light Theme */
+.light .leaflet-popup-content-wrapper {
+  background-color: #ffffff !important;
+  color: #0f172a !important;
+  border: 1px solid rgba(0, 0, 0, 0.08) !important;
+  box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.12) !important;
+}
+
+.light .leaflet-popup-tip {
+  background-color: #ffffff !important;
+  border: 1px solid rgba(0, 0, 0, 0.08) !important;
+}
+
+

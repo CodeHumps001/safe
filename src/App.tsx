@@ -24,6 +24,20 @@ export default function App() {
   const [activeRoute, setActiveRoute] = useState<{ lat: number; lng: number }[] | null>(null);
   const [routeSafetyGrade, setRouteSafetyGrade] = useState<'A' | 'B' | 'C' | 'D' | 'F' | undefined>(undefined);
 
+  const [theme, setTheme] = useState<'light' | 'dark'>(() => {
+    const saved = localStorage.getItem('saferoute_theme');
+    return (saved === 'light' || saved === 'dark') ? saved : 'dark';
+  });
+
+  useEffect(() => {
+    localStorage.setItem('saferoute_theme', theme);
+    if (theme === 'light') {
+      document.documentElement.classList.add('light');
+    } else {
+      document.documentElement.classList.remove('light');
+    }
+  }, [theme]);
+
   // Initialize and load from LocalStorage
   useEffect(() => {
     const cachedReports = localStorage.getItem('saferoute_reports');
@@ -297,6 +311,8 @@ export default function App() {
           }
         }}
         onClearNotifications={handleClearNotifications}
+        theme={theme}
+        toggleTheme={() => setTheme((prev) => (prev === 'light' ? 'dark' : 'light'))}
       />
 
       {/* Main Panel Content Splitter */}
@@ -424,6 +440,7 @@ export default function App() {
             onSelectCoords={handleSelectCoordsFromMap}
             activeRoute={activeRoute}
             routeSafetyGrade={routeSafetyGrade}
+            theme={theme}
           />
         </div>
       </main>

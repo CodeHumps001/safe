@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Shield, Bell, Award, User, Layers, LogOut, Check } from 'lucide-react';
+import { Shield, Bell, Award, User, Layers, LogOut, Check, Sun, Moon } from 'lucide-react';
 import { UserProfile, Notification } from '../types';
 
 interface NavbarProps {
@@ -8,6 +8,8 @@ interface NavbarProps {
   activeTab: 'map' | 'dashboard' | 'leaderboard' | 'digest';
   setActiveTab: (tab: 'map' | 'dashboard' | 'leaderboard' | 'digest') => void;
   onClearNotifications: () => void;
+  theme: 'light' | 'dark';
+  toggleTheme: () => void;
 }
 
 export default function Navbar({
@@ -15,7 +17,9 @@ export default function Navbar({
   notifications,
   activeTab,
   setActiveTab,
-  onClearNotifications
+  onClearNotifications,
+  theme,
+  toggleTheme
 }: NavbarProps) {
   const [showNotifications, setShowNotifications] = useState(false);
   const unreadCount = notifications.filter((n) => !n.read).length;
@@ -77,8 +81,17 @@ export default function Navbar({
       </div>
 
       {/* Action panel (Notifications & Profile avatar dropdown) */}
-      <div className="flex items-center gap-4 relative">
+      <div className="flex items-center gap-3 relative">
         
+        {/* Theme Toggle Button */}
+        <button
+          onClick={toggleTheme}
+          className="p-2.5 rounded-xl bg-zinc-950 hover:bg-zinc-900 border border-white/10 text-slate-300 hover:text-white transition-all relative active:scale-95 flex items-center justify-center cursor-pointer"
+          title={theme === 'light' ? "Switch to Dark Theme" : "Switch to Light Theme"}
+        >
+          {theme === 'light' ? <Moon className="w-4 h-4 text-slate-300" /> : <Sun className="w-4 h-4 text-brand-gold" />}
+        </button>
+
         {/* Notifications bell */}
         <div className="relative">
           <button
