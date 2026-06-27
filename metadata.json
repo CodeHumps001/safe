@@ -1,0 +1,6 @@
+{
+  "name": "SafeRoute Ghana",
+  "description": "Community-powered road safety and real-time hazard intelligence platform for Ghana.",
+  "requestFramePermissions": ["geolocation"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

@@ -1,0 +1,60 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", system-ui, sans-serif;
+  --font-display: "Plus Jakarta Sans", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+  --color-brand-green: #00A651;
+  --color-brand-gold: #f59e0b; /* Amber 500 equivalent for the Bento Grid accent */
+  --color-brand-red: #CE1126;
+  --color-bg-deep: #0a0a0b;
+}
+
+/* Custom scrollbar styling for slick bento layout */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+::-webkit-scrollbar-track {
+  background: rgba(10, 10, 11, 0.5);
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 99px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(245, 158, 11, 0.2);
+}
+
+/* Elegant Leaflet Popups mapping to Bento card aesthetics */
+.leaflet-popup-content-wrapper {
+  background-color: #0d0d0e !important;
+  color: #f1f5f9 !important;
+  border: 1px solid rgba(255, 255, 255, 0.05) !important;
+  border-radius: 20px !important;
+  padding: 8px !important;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.8) !important;
+}
+
+.leaflet-popup-tip {
+  background-color: #0d0d0e !important;
+  border: 1px solid rgba(255, 255, 255, 0.05) !important;
+}
+
+.leaflet-container {
+  background: #09090a !important;
+}
+
+/* Custom bento-style glassmorphism panel overlay */
+.glass-panel {
+  background: rgba(20, 20, 22, 0.7);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Bento Card Style definitions */
+.bento-card-gradient {
+  background: linear-gradient(135deg, #18181b 0%, #0d0d0e 100%);
+}
+
