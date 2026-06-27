@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { HazardReport, UserProfile, RouteSafetyAnalysis } from '../types';
 import { HAZARD_CONFIG, SEVERITY_CONFIG } from '../utils/hazardConfig';
 import { calculateRouteSafetyScore } from '../services/geminiService';
-import { Shield, Award, Users, AlertOctagon, TrendingUp, ChevronRight, MessageSquare, ThumbsUp, Map, Cpu, Send, Check, RefreshCw } from 'lucide-react';
+import { Shield, Award, Users, AlertOctagon, TrendingUp, ChevronRight, MessageSquare, ThumbsUp, Map, Cpu, Send, Check, RefreshCw, MapPin } from 'lucide-react';
 
 interface DashboardProps {
   profile: UserProfile;
@@ -53,6 +53,77 @@ export default function Dashboard({
   const [activeReportId, setActiveReportId] = useState<string | null>(null);
   const [newCommentText, setNewCommentText] = useState('');
 
+  // Precise location tracking for custom routing
+  const [userCoords, setUserCoords] = useState<{ lat: number; lng: number } | null>(null);
+  const [isDetectingLocation, setIsDetectingLocation] = useState(false);
+  const [locationError, setLocationError] = useState<string | null>(null);
+
+  const detectUserLocation = () => {
+    if (!navigator.geolocation) {
+      setLocationError('GPS Geolocation is not supported by your browser.');
+      return;
+    }
+    setIsDetectingLocation(true);
+    setLocationError(null);
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        setUserCoords({
+          lat: position.coords.latitude,
+          lng: position.coords.longitude
+        });
+        setIsDetectingLocation(false);
+      },
+      (error) => {
+        console.error('Error fetching dashboard location:', error);
+        setLocationError('Please grant GPS permission or choose a preset.');
+        setIsDetectingLocation(false);
+      },
+      { enableHighAccuracy: true, timeout: 8000 }
+    );
+  };
+
+  useEffect(() => {
+    detectUserLocation();
+  }, []);
+
+  // Generate dynamic precise routes starting at user's exact coordinates
+  const getAvailableRoutes = () => {
+    const baseRoutes: Record<string, { name: string; coords: { lat: number; lng: number }[] }> = { ...ACCRA_PRESET_ROUTES };
+    
+    if (userCoords) {
+      const destinations = [
+        { name: 'Kwame Nkrumah Circle Interchange', lat: 5.5594, lng: -0.2241 },
+        { name: 'Dankwah Circle, Osu', lat: 5.5582, lng: -0.1982 },
+        { name: 'East Legon (A&C Mall)', lat: 5.6321, lng: -0.1554 },
+        { name: 'Accra High Street (Central)', lat: 5.5414, lng: -0.2012 }
+      ];
+
+      destinations.forEach((dest, idx) => {
+        const key = `gps_route_${idx}`;
+        // Generate winding route points for Leaflet visualization
+        const coords = [
+          { lat: userCoords.lat, lng: userCoords.lng },
+          { 
+            lat: userCoords.lat + (dest.lat - userCoords.lat) * 0.35 + 0.0015, 
+            lng: userCoords.lng + (dest.lng - userCoords.lng) * 0.35 - 0.001 
+          },
+          { 
+            lat: userCoords.lat + (dest.lat - userCoords.lat) * 0.70 - 0.001, 
+            lng: userCoords.lng + (dest.lng - userCoords.lng) * 0.70 + 0.0015 
+          },
+          { lat: dest.lat, lng: dest.lng }
+        ];
+
+        baseRoutes[key] = {
+          name: `⚡ My Location ➔ ${dest.name}`,
+          coords
+        };
+      });
+    }
+
+    return baseRoutes;
+  };
+
   const activeReports = reports.filter(r => r.status === 'active' || r.status === 'under_review');
   const criticalCount = activeReports.filter(r => r.severity === 'critical' || r.severity === 'high').length;
 
@@ -60,18 +131,24 @@ export default function Dashboard({
     if (!key) {
       onClearRoute();
       setRouteAnalysis(null);
+      setSelectedRouteKey('');
       return;
     }
     
     setSelectedRouteKey(key);
     setIsScoringRoute(true);
     
-    const selectedRoute = ACCRA_PRESET_ROUTES[key as keyof typeof ACCRA_PRESET_ROUTES];
+    const allRoutes = getAvailableRoutes();
+    const selectedRoute = allRoutes[key];
+    
+    if (!selectedRoute) {
+      setIsScoringRoute(false);
+      return;
+    }
     
     try {
       // Find active reports near this route path (simplified radius)
       const nearbyHazards = reports.filter(r => {
-        // Just grab hazards that are high/critical for the demo
         return r.status === 'active';
       });
 
@@ -198,7 +275,7 @@ export default function Dashboard({
               className="w-full bg-zinc-950 border border-white/10 rounded-xl px-4 py-3 text-slate-100 text-xs focus:outline-none focus:ring-1 focus:ring-brand-gold cursor-pointer"
             >
               <option value="">-- Choose travel route --</option>
-              {Object.entries(ACCRA_PRESET_ROUTES).map(([key, route]) => (
+              {Object.entries(getAvailableRoutes()).map(([key, route]) => (
                 <option key={key} value={key}>{route.name}</option>
               ))}
             </select>
@@ -208,13 +285,48 @@ export default function Dashboard({
             <div className="flex items-end pb-1">
               <button
                 onClick={() => handleRouteScoring(selectedRouteKey)}
-                className="bg-zinc-900 hover:bg-zinc-800 text-slate-200 text-xs font-semibold px-4 py-3 rounded-xl border border-white/10 flex items-center gap-1.5 transition-all"
+                className="bg-zinc-900 hover:bg-zinc-800 text-slate-200 text-xs font-semibold px-4 py-3 rounded-xl border border-white/10 flex items-center gap-1.5 transition-all cursor-pointer"
               >
                 <RefreshCw className={`w-3.5 h-3.5 ${isScoringRoute ? 'animate-spin' : ''}`} />
                 Recalculate route safety
               </button>
             </div>
           )}
+        </div>
+
+        {/* GPS Precise Positioning Control Area */}
+        <div className="mt-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-zinc-900/40 border border-white/5 rounded-2xl p-4">
+          <div className="flex items-center gap-3">
+            <div className={`w-2.5 h-2.5 rounded-full flex-shrink-0 ${userCoords ? 'bg-emerald-500 animate-pulse' : 'bg-amber-500'}`} />
+            <div>
+              <p className="text-[10px] font-black uppercase tracking-wider text-white">
+                {userCoords ? '🎯 Precise GPS Active' : '📍 GPS Positioning Standby'}
+              </p>
+              <p className="text-[9px] text-slate-400 font-mono mt-0.5 leading-relaxed">
+                {userCoords 
+                  ? `${userCoords.lat.toFixed(5)}° N, ${userCoords.lng.toFixed(5)}° W (Ghana)`
+                  : 'Dynamic GPS route calculating enabled. Grant browser permissions to analyze road hazards starting from your live coordinate grid.'}
+              </p>
+              {locationError && (
+                <p className="text-[9px] text-rose-400 font-mono mt-1 font-bold">⚠️ {locationError}</p>
+              )}
+            </div>
+          </div>
+          
+          <button
+            onClick={detectUserLocation}
+            disabled={isDetectingLocation}
+            className="bg-brand-gold hover:bg-amber-400 text-slate-950 font-black text-[9px] uppercase tracking-wider px-4 py-2.5 rounded-xl border border-slate-950/20 transition-all flex items-center justify-center gap-1.5 cursor-pointer disabled:opacity-50 font-sans"
+          >
+            {isDetectingLocation ? (
+              <RefreshCw className="w-3.5 h-3.5 animate-spin" />
+            ) : (
+              <>
+                <MapPin className="w-3.5 h-3.5" />
+                <span>Locate Me</span>
+              </>
+            )}
+          </button>
         </div>
 
         {/* AI Route Scorer Results Panel */}
